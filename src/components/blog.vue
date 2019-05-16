@@ -4,7 +4,7 @@
         <article class="uk-article">
           <h2>{{ blog.name }}</h2>
           <p class="uk-article-meta">发表于{{ blog.created_at|datetime('yyyy年MM月dd日 hh时mm分ss秒') }}</p>
-          <p>{{ blog.content }}</p>
+          <div v-html="blog.content"></div>
         </article>
 
         <hr class="uk-article-divider">
@@ -77,7 +77,7 @@
       return {
         blog:{},
         comments: [],
-        content: ''
+        content: '',
       }
     },
     mounted(){
@@ -90,9 +90,7 @@
         this.$axios.post(`/api/blogs/${ id }/comments`,{
           content: this.content.trim()
         }).then(res=>{
-          console.log(res)
           if (res.code == 0){
-            console.log(id)
             this.content = ''
             this.getData()
           }
@@ -103,6 +101,7 @@
       getData() {
         var id = this.$route.params.id
         if (id){
+
           this.$axios.get(`/api/blogs/${id}`).then(res=>{
             this.blog = res.data
           })
@@ -118,6 +117,10 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+  #disabled-editor {
+    height: auto;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
 </style>

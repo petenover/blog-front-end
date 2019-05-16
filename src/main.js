@@ -8,6 +8,12 @@ import date_filter from './filter/date_filter'
 import store from './store'
 import VeeValidate from 'vee-validate'
 
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import 'highlight.js/styles/monokai-sublime.css'
+
 Vue.config.productionTip = false
 const instance = axios.create({
 })

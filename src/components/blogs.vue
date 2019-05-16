@@ -1,7 +1,7 @@
 <template>
   <div class="uk-grid">
     <div class="uk-width-medium-3-4">
-      <article class="uk-article" v-for="blog in blogs" :key="blog.id">
+      <article @click="getBlog(blog.id)" class="uk-article" v-for="blog in blogs" :key="blog.id">
         <h2><a>{{ blog.name }}</a></h2>
         <p class="uk-article-meta">发表于{{ blog.created_at|datetime('yyyy年MM月dd日 hh时mm分ss秒') }}</p>
         <p>{{ blog.summary }}</p>
@@ -36,6 +36,11 @@
         console.log(res)
         this.blogs = res.data
       })
+    },
+    methods: {
+      getBlog(id){
+        this.$router.push('/manager/blog/detail/'+id)
+      }
     }
   }
 </script>

@@ -106,18 +106,22 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    padding-bottom: 215px;
+    /*padding-bottom: 215px;*/
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .container {
-    height: 100%;
+    /*height: 100%;*/
     overflow-y: auto;
     padding-bottom: 36px;
+    flex-grow: 1;
   }
   .bottom-nav.uk-margin-large-top {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    /*position: fixed;*/
+    /*width: 100%;*/
+    /*bottom: 0;*/
     margin: 0 !important;
   }
   .dropdown:hover .uk-dropdown {

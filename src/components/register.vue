@@ -10,6 +10,12 @@
         </div>
       </div>
       <div class="uk-form-row">
+        <label class="uk-form-label">头像:</label>
+        <div class="uk-form-controls">
+          <input @change="uploadImage" type="file" maxlength="50" placeholder="头像" accept="image/jpeg;image/png" :multiple="false" class="uk-width-1-1">
+        </div>
+      </div>
+      <div class="uk-form-row">
         <label class="uk-form-label">电子邮件:</label>
         <div class="uk-form-controls">
           <input v-model="email" type="text" maxlength="50" placeholder="your-name@example.com" :class="['uk-width-1-1', errors.has('email') && 'danger-border']" name="email" v-validate="'email'">
@@ -30,6 +36,7 @@
           <span v-show="errors.has('password2')" class="help is-danger">输入两次密码不一致</span>
         </div>
       </div>
+
       <div class="uk-form-row">
         <button type="submit" class="uk-button uk-button-primary" :disabled="disabledFlag"><i class="uk-icon-user"></i> 注册</button>
       </div>
@@ -43,21 +50,31 @@
     data(){
       return {
         name: '',
+        image: '',
         email: '',
         password1: '',
         password2: ''
       }
     },
     methods: {
+      uploadImage(e) {
+        console.log(e.target.files[0])
+        this.image = e.target.files[0]
+      },
       submit: function (event) {
         event.preventDefault();
-        var email = this.email.trim().toLowerCase(),
-        data = {
-          name: this.name.trim(),
-          email: email,
-          passwd: CryptoJS.SHA1(email + ':' + this.password1).toString()
-        };
-        this.$axios.post('/api/users',data).then(res=>{
+        var email = this.email.trim().toLowerCase();
+        let formData = new FormData()
+        formData.append('name', this.name.trim())
+        formData.append('email', email)
+        formData.append('passwd', CryptoJS.SHA1(email + ':' + this.password1).toString())
+        formData.append('image', this.image)
+
+        this.$axios.post('/api/users',formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(res=>{
           this.$router.push("/")
         });
       }
